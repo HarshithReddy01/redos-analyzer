@@ -1,0 +1,195 @@
+========================================================================
+  ReDoS Scan -- Summary Report
+========================================================================
+  Packages scanned : 20
+  Total warnings   : 54  (showing: runtime only)
+  Displayed        : 23
+
+  By context_type:
+    runtime     :   23  <-- displayed
+    test        :   10
+    vendored    :   21
+    tooling     :    0
+
+  HIGH severity     : 15
+  MEDIUM severity   : 7
+  LIKELY exploitable: 0
+
+  Package            Total   Runtime    HIGH    MEDIUM
+  ----------------  ------  --------  ------  --------
+  requests               0         0       0         0
+  flask                  0         0       0         0
+  django                 0         0       0         0
+  fastapi                0         0       0         0
+  sqlalchemy             8         8       4         4  <-- HIGH RISK
+  pydantic               1         1       1         0  <-- HIGH RISK
+  pytest                10        10       1         9  <-- HIGH RISK
+  numpy                 41        12      11         0  <-- HIGH RISK
+  pandas                 3         3       1         2  <-- HIGH RISK
+  pillow                 3         0       0         0
+  scrapy                 0         0       0         0
+  celery                 1         1       1         0  <-- HIGH RISK
+  boto3                  0         0       0         0
+  httpx                  0         0       0         0
+  aiohttp                8         8       5         3  <-- HIGH RISK
+  click                  0         0       0         0
+  rich                   0         0       0         0
+  typer                  1         1       1         0  <-- HIGH RISK
+  black                 13         7       4         3  <-- HIGH RISK
+  mypy                   1         1       1         0  <-- HIGH RISK
+
+========================================================================
+  TOP FINDINGS (HIGH severity, runtime only)
+========================================================================
+
+  [sqlalchemy]  sqlalchemy-2.0.49/lib/sqlalchemy/dialects/sqlite/base.py  line 2420
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : 'create table .*?\\((.*)\\)(?:\\s*,?\\s*(?:WITHOUT\\s+ROWID|STRICT))*$'
+  Detail      : Repeating quantifier '*' on '[\s]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [sqlalchemy]  sqlalchemy-2.0.49/lib/sqlalchemy/util/langhelpers.py  line 1908
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : 'sqlalchemy/([a-z_]+/){0,2}[a-z_]+\\.py'
+  Detail      : Repeating quantifier '+' on '[a-z_]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two qu
+
+  [pydantic]  pydantic-2.12.5/pydantic/json_schema.py  line 2219
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '(?:[^.[\\]]+\\.)+((?:[^.[\\]]+))'
+  Detail      : Repeating quantifier '+' on '[^.[\]]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two q
+
+  [pytest]  pytest-9.0.2/src/_pytest/mark/expression.py  line 113
+  Class       : NULLABLE_BRANCH_IN_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '(:?\\w|:|\\+|-|\\.|\\[|\\]|\\\\|/)+'
+  Detail      : Alternative(s) [':?[\\w]'] inside quantifier '+' can match the empty
+              string.  The group can iterate without consuming
+              input, enabling exponential backtracking on a failing
+              match.
+
+  [numpy]  numpy-2.4.4/numpy/distutils/fcompiler/ibm.py  line 42
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : 'xlfcmp:(?P<version>\\d+([.]\\d+)+)'
+  Detail      : Repeating quantifier '+' on '[\d]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [numpy]  numpy-2.4.4/numpy/f2py/crackfortran.py  line 934
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '\\s*(?P<name>\\b[\\w$]+\\b)\\s*(@\\(@\\s*(?P<args>[\\w\\s,]*)\\s*@\\)@|)\\s*((result(\\s*@\\(@\\s*(?P<result>\\b[\\w$]+\\b)\\s*@\\)@|))|(bind\\s*@\\(@\\s*(?P<bind>(?:(?!@\\)@).)*)\\s*@\\)@))*\\s*\\Z'
+  Detail      : Repeating quantifier '*' on '[\s]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [numpy]  numpy-2.4.4/tools/c_coverage/c_coverage_report.py  line 119
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '(?P<lineno>[0-9]+)(\\s[0-9]+)+'
+  Detail      : Repeating quantifier '+' on '[0-9]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two qua
+
+  [numpy]  numpy-2.4.4/tools/check_python_h_first.py  line 15
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '^\\s*#\\s*include\\s*[<"]((?:\\w+/)*\\w+(?:\\.h[hp+]{0,2})?)[>"]\\s*$'
+  Detail      : Repeating quantifier '+' on '[\w]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [pandas]  pandas-3.0.2/pandas/io/common.py  line 71
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '^[A-Za-z][A-Za-z0-9+\\-+.]*(::[A-Za-z0-9+\\-+.]+)*://'
+  Detail      : Repeating quantifier '+' on '[A-Za-z0-9+\-.]' is nested inside the
+              outer repeating quantifier.  On a failing match the
+              engine must explore an exponential number of ways to
+              partition the input across t
+
+  [celery]  celery-5.6.3/t/integration/test_canvas.py  line 1993
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : UNLIKELY
+  Pattern     : '[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}'
+  Detail      : Repeating quantifier '{4}' on '[0-9A-Fa-f]' is nested inside the
+              outer repeating quantifier.  On a failing match the
+              engine must explore an exponential number of ways to
+              partition the input across the
+
+  [aiohttp]  aiohttp-3.13.5/aiohttp/_websocket/helpers.py  line 66
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '^(?:;\\s*(?:(server_no_context_takeover)|(client_no_context_takeover)|(server_max_window_bits(?:=(\\d+))?)|(client_max_window_bits(?:=(\\d+))?)))*$'
+  Detail      : Repeating quantifier '*' on '[\s]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [aiohttp]  aiohttp-3.13.5/aiohttp/web_urldispatcher.py  line 93
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '(\\{[_a-zA-Z][^{}]*(?:\\{[^{}]*\\}[^{}]*)*\\})'
+  Detail      : Repeating quantifier '*' on '[^{}]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two qua
+
+  [typer]  typer-0.24.1/typer/cli.py  line 41
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '[a-zA-Z_]\\w*(\\.[a-zA-Z_]\\w*)*'
+  Detail      : Repeating quantifier '*' on '[\w]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [black]  black-26.3.1/action/main.py  line 20
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '^black((?:\\s*(?:~=|==|!=|<=|>=|<|>|===)\\s*[A-Za-z0-9*+._-]+)(?:\\s*,\\s*(?:~=|==|!=|<=|>=|<|>|===)\\s*[A-Za-z0-9*+._-]+)*)\\s*$'
+  Detail      : Repeating quantifier '*' on '[\s]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two quan
+
+  [mypy]  mypy-1.20.0/mypy/stubdoc.py  line 23
+  Class       : NESTED_QUANTIFIER
+  context     : runtime
+  Exploit     : POSSIBLE
+  Pattern     : '^[a-zA-Z_][\\w\\[\\], .\\"\\\'|]*(\\.[a-zA-Z_][\\w\\[\\], ]*)*$'
+  Detail      : Repeating quantifier '*' on '[\w[\], ]' is nested inside the outer
+              repeating quantifier.  On a failing match the engine
+              must explore an exponential number of ways to
+              partition the input across the two
+
+  Run with --all to include test/vendored/tooling findings.

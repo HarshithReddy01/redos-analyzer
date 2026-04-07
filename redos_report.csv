@@ -1,0 +1,130 @@
+package,file,line,pattern,warning_class,severity,exploitability,exploit_score,exploit_reasons,context_type,occurrences,detail
+sqlalchemy,sqlalchemy-2.0.49/lib/sqlalchemy/dialects/sqlite/base.py,2831,"
+            (?<![A-Za-z0-9_])   # Negative lookbehind: ensure CHECK is not
+                                # part of an identifier (e.g., table name
+                                # like ""tableCHECK"")
+
+            (?:                 # Optional CONSTRAINT clause
+                CONSTRAINT\s+
+                (               # Group 1: Constraint name (quoted or unquoted)
+                    ""(?:[^""]|"""")+""        # Double-quoted: ""name"" or ""na""""me""
+                    |'(?:[^']|'')+'  # Single-quoted: 'name' or 'na''me'
+                    |\[(?:[^\]]|\]\])+\]  # Bracket-quoted: [name] or [na]]me]
+                    |`(?:[^`]|``)+`       # Backtick-quoted: `name` or `na``me`
+                    |\S+                  # Unquoted: simple_name
+                )
+                \s+
+            )?
+
+            CHECK\s*\(          # CHECK keyword followed by opening paren
+            ",OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,3,ALL_CAPS constant name (likely hardcoded pattern),runtime,4,"Branches '[^""]' and '""""' share overlapping first-character sets inside quantifier '+'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtracking."
+sqlalchemy,sqlalchemy-2.0.49/lib/sqlalchemy/dialects/sqlite/base.py,2420,"create table .*?\((.*)\)(?:\s*,?\s*(?:WITHOUT\s+ROWID|STRICT))*$",NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,3,Repeating quantifier '*' on '[\s]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+sqlalchemy,sqlalchemy-2.0.49/lib/sqlalchemy/util/langhelpers.py,1908,"sqlalchemy/([a-z_]+/){0,2}[a-z_]+\.py",NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,Repeating quantifier '+' on '[a-z_]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qu
+pydantic,pydantic-2.12.5/pydantic/json_schema.py,2219,(?:[^.[\]]+\.)+((?:[^.[\]]+)),NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,Repeating quantifier '+' on '[^.[\]]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two q
+pytest,pytest-9.0.2/src/_pytest/mark/expression.py,113,(:?\w|:|\+|-|\.|\[|\]|\\|/)+,LIKELY_TYPO,MEDIUM,POSSIBLE,5,no user-input signals found,runtime,1,"Found '(:?' - this looks like a typo for '(?:' (non-capturing group). '(:?' creates a capturing group that optionally matches a literal colon, which is rarely the intended behaviour. If you meant a no"
+pytest,pytest-9.0.2/src/_pytest/mark/expression.py,113,(:?\w|:|\+|-|\.|\[|\]|\\|/)+,NULLABLE_BRANCH_IN_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,"Alternative(s) [':?[\\w]'] inside quantifier '+' can match the empty string.  The group can iterate without consuming input, enabling exponential backtracking on a failing match."
+pytest,pytest-9.0.2/src/_pytest/mark/expression.py,113,(:?\w|:|\+|-|\.|\[|\]|\\|/)+,OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,5,no user-input signals found,runtime,8,"Branches ':?[\w]' and ':' share overlapping first-character sets inside quantifier '+'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtracking."
+numpy,numpy-2.4.4/numpy/distutils/fcompiler/ibm.py,42,xlfcmp:(?P<version>\d+([.]\d+)+),NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,Repeating quantifier '+' on '[\d]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+numpy,numpy-2.4.4/numpy/f2py/crackfortran.py,934,"\s*(?P<name>\b[\w$]+\b)\s*(@\(@\s*(?P<args>[\w\s,]*)\s*@\)@|)\s*((result(\s*@\(@\s*(?P<result>\b[\w$]+\b)\s*@\)@|))|(bind\s*@\(@\s*(?P<bind>(?:(?!@\)@).)*)\s*@\)@))*\s*\Z",NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,8,Repeating quantifier '*' on '[\s]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+numpy,numpy-2.4.4/numpy/linalg/lapack_lite/clapack_scrub.py,278,^\s+extern.*? dlamch_.*?;$(?m),PARSE_ERROR,LOW,POSSIBLE,5,no user-input signals found,runtime,1,Pattern failed to parse: global flags not at the start of the expression at position 26
+numpy,numpy-2.4.4/tools/c_coverage/c_coverage_report.py,119,(?P<lineno>[0-9]+)(\s[0-9]+)+,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/tools/check_python_h_first.py,15,"^\s*#\s*include\s*[<""]((?:\w+/)*\w+(?:\.h[hp+]{0,2})?)[>""]\s*$",NESTED_QUANTIFIER,HIGH,POSSIBLE,3,ALL_CAPS constant name (likely hardcoded pattern),runtime,1,Repeating quantifier '+' on '[\w]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+numpy,numpy-2.4.4/vendored-meson/meson/docs/extensions/refman_links.py,86,(\[\[#?@?([ \n\t]*[a-zA-Z0-9_]+[ \n\t]*\.)*[ \n\t]*[a-zA-Z0-9_]+[ \n\t]*\]\])(.)?,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,3,"Repeating quantifier '*' on '[ 
+	]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua"
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/backend/backends.py,355,[.][a]([.]?([0-9]+))*([.]?([a-z]+))*,NESTED_QUANTIFIER,HIGH,POSSIBLE,4,string literal passed directly (not from a variable),vendored,2,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/build.py,2941,\.so(\.\d+)*$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[\d]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/cmake/interpreter.py,133,(\.[0-9]+)+$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/cmake/traceparser.py,772,^([A-Za-z]:)?/(.*/)*[^./]+$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '*' on '.' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quantif
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/compilers/mixins/clike.py,1317,"(?P<pre>.*([^\\]"")|^"")(?P<str1>([^\\""]|\\.)*)""\s+""(?P<str2>([^\\""]|\\.)*)(?P<post>"".*)",OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,5,no user-input signals found,vendored,2,"Branches '[^\\""]' and '\\.' share overlapping first-character sets inside quantifier '*'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtrackin"
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/dependencies/blas_lapack.py,474,\d+(?:\.\d+)+,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[\d]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/interpreter/type_checking.py,126,"[0-9]+(\.[0-9]+){0,2}",NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/interpreter/type_checking.py,682,"[0-9]+(\.[0-9]+){0,2}",NESTED_QUANTIFIER,HIGH,UNLIKELY,2,len() guard found in context,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/linkers/linkers.py,1572,[.][a]([.]?([0-9]+))*([.]?([a-z]+))*,NESTED_QUANTIFIER,HIGH,POSSIBLE,4,string literal passed directly (not from a variable),vendored,2,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/minstall.py,743,[.][a]([.]?([0-9]+))*([.]?([a-z]+))*,NESTED_QUANTIFIER,HIGH,POSSIBLE,4,string literal passed directly (not from a variable),vendored,2,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/mparser.py,117,f'''(.|\n)*?''',OVERLAPPING_ALTERNATION,MEDIUM,LIKELY,6,os.environ/getenv found (env variable); no length guard detected,vendored,1,"Branches '.' and '
+' share overlapping first-character sets inside quantifier '*?'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtracking."
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/mparser.py,118,f'([^'\\]|(\\.))*',OVERLAPPING_ALTERNATION,MEDIUM,LIKELY,6,os.environ/getenv found (env variable); no length guard detected,vendored,1,"Branches '[^'\\]' and '(\\.)' share overlapping first-character sets inside quantifier '*'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtrack"
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/mparser.py,123,'''(.|\n)*?''',OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,5,no user-input signals found,vendored,1,"Branches '.' and '
+' share overlapping first-character sets inside quantifier '*?'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtracking."
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/mparser.py,132,'([^'\\]|(\\.))*',OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,5,no user-input signals found,vendored,1,"Branches '[^'\\]' and '(\\.)' share overlapping first-character sets inside quantifier '*'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtrack"
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/programs.py,126,([0-9]+(\.[0-9]+)+),NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/mesonbuild/utils/universal.py,1001,"
+    (?<!                # Zero-width negative lookbehind assertion
+        (
+            \d          # One digit
+            | \.        # Or one period
+        )               # One occurrence
+    )
+    # Following pattern must not follow a digit or period
+    (
+        \d{1,2}         # One or two digits
+        (
+            \.\d+       # Period and one or more digits
+        )+              # One or more occurrences
+        (
+            -[a-zA-Z0-9]+   # Hyphen and one or more alphanumeric
+        )?              # Zero or one occurrence
+    )                   # One occurrence
+    ",NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[\d]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+numpy,numpy-2.4.4/vendored-meson/meson/run_project_tests.py,1531,^([0-9]+(\.[0-9]+)*(-[a-z0-9]+)?)$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/run_project_tests.py,1537,^cmake version ([0-9]+(\.[0-9]+)*(-[a-z0-9]+)?)$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/run_project_tests.py,1543,^([0-9]+(\.[0-9]+)*(-[a-z0-9]+)?)$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,vendored,1,Repeating quantifier '+' on '[0-9]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+numpy,numpy-2.4.4/vendored-meson/meson/tools/cmake2meson.py,29,"""([^\\]|(\\.))*?""",OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,4,string literal passed directly (not from a variable),vendored,1,"Branches '[^\]' and '(\\.)' share overlapping first-character sets inside quantifier '*?'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtracki"
+numpy,numpy-2.4.4/vendored-meson/meson/unittests/datatests.py,232,syn keyword mesonBuiltin(\s+\\\s\w+)+,NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,2,Repeating quantifier '+' on '[\s]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+pandas,pandas-3.0.2/pandas/io/common.py,71,^[A-Za-z][A-Za-z0-9+\-+.]*(::[A-Za-z0-9+\-+.]+)*://,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,Repeating quantifier '+' on '[A-Za-z0-9+\-.]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across t
+pandas,pandas-3.0.2/pandas/io/formats/excel.py,418,"(?x)
+            (
+            ""(?:[^""]|\\"")+""
+            |
+            '(?:[^']|\\')+'
+            |
+            [^'"",]+
+            )(?=,|\s*$)
+        ",OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,4,string literal passed directly (not from a variable),runtime,2,"Branches '[^""]' and '\\""' share overlapping first-character sets inside quantifier '+'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtracking."
+pillow,pillow-12.2.0/Tests/test_features.py,43,\d+(\.\d+)*$,NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[\d]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+pillow,pillow-12.2.0/Tests/test_file_avif.py,109,^v?\d+\.\d+\.\d+(-([a-z\d])+)*$,NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '([a-z\d])' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two
+pillow,pillow-12.2.0/Tests/test_file_png.py,90,"\d+(\.\d+){1,3}(\.zlib\-ng)?$",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[\d]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+celery,celery-5.6.3/t/integration/test_canvas.py,1993,[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12},NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,runtime,1,Repeating quantifier '{4}' on '[0-9A-Fa-f]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the
+aiohttp,aiohttp-3.13.5/aiohttp/_cookie_helpers.py,49,"
+    \s*                            # Optional whitespace at start of cookie
+    (?P<key>                       # Start of group 'key'
+    # aiohttp has extended to include [] for compatibility with real-world cookies
+    [\w\d!#%&'~_`><@,:/\$\*\+\-\.\^\|\)\(\?\}\{\[\]]+   # Any word of at least one letter
+    )                              # End of group 'key'
+    (                              # Optional group: there may not be a value.
+    \s*=\s*                          # Equal Sign
+    (?P<val>                         # Start of group 'val'
+    ""(?:[^\\""]|\\.)*""                  # Any double-quoted string (properly closed)
+    |                                  # or
+    ""[^"";]*                            # Unmatched opening quote (differs from SimpleCookie - issue #7993)
+    |                                  # or
+    # Special case for ""expires"" attr - RFC 822, RFC 850, RFC 1036, RFC 1123
+    (\w{3,6}day|\w{3}),\s              # Day of the week or abbreviated day (with comma)
+    [\w\d\s-]{9,11}\s[\d:]{8}\s        # Date and time in specific format
+    (GMT|[+-]\d{4})                     # Timezone: GMT or RFC 2822 offset like -0000, +0100
+                                        # NOTE: RFC 2822 timezone support is an aiohttp extension
+                                        # for issue #4493 - SimpleCookie does NOT support this
+    |                                  # or
+    # ANSI C asctime() format: ""Wed Jun  9 10:18:14 2021""
+    # NOTE: This is an aiohttp extension for issue #4327 - SimpleCookie does NOT support this format
+    \w{3}\s+\w{3}\s+[\s\d]\d\s+\d{2}:\d{2}:\d{2}\s+\d{4}
+    |                                  # or
+    [\w\d!#%&'~_`><@,:/\$\*\+\-\.\^\|\)\(\?\}\{\=\[\]]*      # Any word or empty string
+    )                                # End of group 'val'
+    )?                             # End of optional value group
+    \s*                            # Any number of spaces.
+    (\s+|;|$)                      # Ending either at space, semicolon, or EOS.
+    ",OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,5,no user-input signals found,runtime,1,"Branches '[^\\""]' and '\\.' share overlapping first-character sets inside quantifier '*'. The same input may be matched in multiple ways across iterations, potentially causing catastrophic backtrackin"
+aiohttp,aiohttp-3.13.5/aiohttp/_websocket/helpers.py,66,^(?:;\s*(?:(server_no_context_takeover)|(client_no_context_takeover)|(server_max_window_bits(?:=(\d+))?)|(client_max_window_bits(?:=(\d+))?)))*$,OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,5,no user-input signals found,runtime,2,Branches '(server_no_context_takeover)' and '(server_max_window_bits(?:=([\d]+))?)' share overlapping first-character sets inside quantifier '*'. The same input may be matched in multiple ways across 
+aiohttp,aiohttp-3.13.5/aiohttp/_websocket/helpers.py,66,^(?:;\s*(?:(server_no_context_takeover)|(client_no_context_takeover)|(server_max_window_bits(?:=(\d+))?)|(client_max_window_bits(?:=(\d+))?)))*$,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,3,Repeating quantifier '*' on '[\s]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+aiohttp,aiohttp-3.13.5/aiohttp/web_urldispatcher.py,93,(\{[_a-zA-Z][^{}]*(?:\{[^{}]*\}[^{}]*)*\}),NESTED_QUANTIFIER,HIGH,POSSIBLE,4,string literal passed directly (not from a variable),runtime,2,Repeating quantifier '*' on '[^{}]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+typer,typer-0.24.1/typer/cli.py,41,[a-zA-Z_]\w*(\.[a-zA-Z_]\w*)*,NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,Repeating quantifier '*' on '[\w]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+black,black-26.3.1/action/main.py,20,"^black((?:\s*(?:~=|==|!=|<=|>=|<|>|===)\s*[A-Za-z0-9*+._-]+)(?:\s*,\s*(?:~=|==|!=|<=|>=|<|>|===)\s*[A-Za-z0-9*+._-]+)*)\s*$",OVERLAPPING_ALTERNATION,MEDIUM,POSSIBLE,4,ALL_CAPS constant name (likely hardcoded pattern); os.environ/getenv found (env variable); no length guard detected,runtime,3,"Branch '==' is a literal prefix of '===' (or vice-versa) inside quantifier '*'.  The same input can be matched in multiple ways across iterations, causing catastrophic backtracking."
+black,black-26.3.1/action/main.py,20,"^black((?:\s*(?:~=|==|!=|<=|>=|<|>|===)\s*[A-Za-z0-9*+._-]+)(?:\s*,\s*(?:~=|==|!=|<=|>=|<|>|===)\s*[A-Za-z0-9*+._-]+)*)\s*$",NESTED_QUANTIFIER,HIGH,POSSIBLE,4,ALL_CAPS constant name (likely hardcoded pattern); os.environ/getenv found (env variable); no length guard detected,runtime,4,Repeating quantifier '*' on '[\s]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two quan
+black,black-26.3.1/tests/data/cases/preview_long_strings__regression.py,358,"(?<!([0-9]\ ))(?<=(^|\ ))([A-Z]+(\ )?|[0-9](\ )|[a-z](\ )){4,7}([A-Z]|[0-9]|[a-z])($|\b)(?!(\ ?([0-9]\ )|(\.)))",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[A-Z]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+black,black-26.3.1/tests/data/cases/preview_long_strings__regression.py,364,"(?<!([0-9]\ ))(?<=(^|\ ))([A-Z]+(\ )?|[0-9](\ )|[a-z](\\ )){4,7}([A-Z]|[0-9]|[a-z])($|\b)(?!(\ ?([0-9]\ )|(\.)))",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[A-Z]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+black,black-26.3.1/tests/data/cases/preview_long_strings__regression.py,370,"(?<!([0-9]\ ))(?<=(^|\ ))([A-Z]+(\ )?|[0-9](\ )|[a-z](\\\ )){4,7}([A-Z]|[0-9]|[a-z])($|\b)(?!(\ ?([0-9]\ )|(\.)))",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[A-Z]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+black,black-26.3.1/tests/data/cases/preview_long_strings__regression.py,1013,"(?<!([0-9]\ ))(?<=(^|\ ))([A-Z]+(\ )?|[0-9](\ )|[a-z](\ )){4,7}([A-Z]|[0-9]|[a-z])($|\b)(?!(\ ?([0-9]\ )|(\.)))",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[A-Z]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+black,black-26.3.1/tests/data/cases/preview_long_strings__regression.py,1019,"(?<!([0-9]\ ))(?<=(^|\ ))([A-Z]+(\ )?|[0-9](\ )|[a-z](\\ )){4,7}([A-Z]|[0-9]|[a-z])($|\b)(?!(\ ?([0-9]\ )|(\.)))",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[A-Z]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+black,black-26.3.1/tests/data/cases/preview_long_strings__regression.py,1026,"(?<!([0-9]\ ))(?<=(^|\ ))([A-Z]+(\ )?|[0-9](\ )|[a-z](\\\ )){4,7}([A-Z]|[0-9]|[a-z])($|\b)(?!(\ ?([0-9]\ )|(\.)))",NESTED_QUANTIFIER,HIGH,UNLIKELY,1,test file path,test,1,Repeating quantifier '+' on '[A-Z]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two qua
+mypy,mypy-1.20.0/mypy/stubdoc.py,23,"^[a-zA-Z_][\w\[\], .\""\'|]*(\.[a-zA-Z_][\w\[\], ]*)*$",NESTED_QUANTIFIER,HIGH,POSSIBLE,5,no user-input signals found,runtime,1,"Repeating quantifier '*' on '[\w[\], ]' is nested inside the outer repeating quantifier.  On a failing match the engine must explore an exponential number of ways to partition the input across the two"

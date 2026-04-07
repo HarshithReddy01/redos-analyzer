@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+src/redos_analyzer/__init__.py
+src/redos_analyzer/_cli.py
+src/redos_analyzer.egg-info/PKG-INFO
+src/redos_analyzer.egg-info/SOURCES.txt
+src/redos_analyzer.egg-info/dependency_links.txt
+src/redos_analyzer.egg-info/entry_points.txt
+src/redos_analyzer.egg-info/requires.txt
+src/redos_analyzer.egg-info/top_level.txt

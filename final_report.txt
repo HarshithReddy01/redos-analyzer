@@ -1,0 +1,10 @@
+ReDoS analyzer final report
+
+This workspace contains the latest scan artifacts:
+- redos_report.csv
+- redos_fixes.csv
+- scan_summary.txt
+
+Regenerate with:
+python scan_pypi.py
+python generate_fixes.py

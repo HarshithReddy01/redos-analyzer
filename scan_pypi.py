@@ -12,7 +12,7 @@ import requests
 from collections import Counter, OrderedDict
 from pathlib import Path
 from dataclasses import dataclass, field, fields
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
 from redos_analyzer import analyze, classify_exploitability
 PACKAGES = ['requests', 'flask', 'django', 'fastapi', 'sqlalchemy', 'pydantic', 'pytest', 'numpy', 'pandas', 'pillow', 'scrapy', 'celery', 'boto3', 'httpx', 'aiohttp', 'click', 'rich', 'typer', 'black', 'mypy']
 SEVERITY = {'NESTED_QUANTIFIER': 'HIGH', 'NULLABLE_BRANCH_IN_QUANTIFIER': 'HIGH', 'OVERLAPPING_ALTERNATION': 'MEDIUM', 'LIKELY_TYPO': 'MEDIUM', 'PARSE_ERROR': 'LOW'}

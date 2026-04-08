@@ -2,7 +2,7 @@ import csv
 import sys
 import textwrap
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
 from redos_analyzer import analyze, suggest_fix, verify_fix
 INPUT_CSV = Path(__file__).parent / 'redos_report.csv'
 OUTPUT_CSV = Path(__file__).parent / 'redos_fixes.csv'
